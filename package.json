@@ -1,0 +1,19 @@
+{
+  "name": "cs6750-group-project",
+  "version": "1.0.0",
+  "description": "Robert Fischer's prototype for the CS6750 at Georgia Tech",
+  "main": "main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobertFischer/cs6750-group-project.git"
+  },
+  "author": "Robert Fischer",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/RobertFischer/cs6750-group-project/issues"
+  },
+  "homepage": "https://robertfischer.github.com/cs6750-group-project/"
+}
