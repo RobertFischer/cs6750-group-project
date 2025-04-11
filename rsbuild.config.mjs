@@ -9,6 +9,7 @@ export default defineConfig({
   output: {
     assetPrefix: "/cs6750-group-project/",
     polyfill: 'entry',
+    cleanDistPath: true,
     distPath: {
       root: 'docs',
     },
