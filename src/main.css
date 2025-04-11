@@ -3,25 +3,3 @@ body {
 	background: FloralWhite;
 }
 
-.demo {
-	display: inline-block;
-	border: 0.25em solid silver;
-	border-radius: 4em;
-	padding: 2em;
-	margin-bottom: 2em;
-}
-
-.demo p {
-	margin: 0;
-	padding: 0;
-}
-
-.demo label {
-	padding-left: 0.5em;
-	font-weight: bold;
-}
-
-select#voices {
-	display: inline-block;
-	width: auto;
-}
