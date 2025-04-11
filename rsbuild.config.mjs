@@ -8,6 +8,10 @@ export default defineConfig({
   },
   output: {
     assetPrefix: "/cs6750-group-project/",
+    polyfill: 'entry',
+    distPath: {
+      root: 'docs',
+    },
   },
   plugins: [
     pluginReact(),
