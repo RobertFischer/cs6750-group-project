@@ -1,10 +1,20 @@
 import typescript from '@rollup/plugin-typescript';
 
 export default {
-  input: 'src/index.ts',
+  input: 'src/index.tsx',
   output: {
     file: 'bundle.js',
-    format: 'iife'
+    format: 'iife',
+    globals: {
+      "react/jsx-runtime": "jsxRuntime",
+      "react": "react",
+      "react-dom/client": "client",
+    },
   },
-  plugins: [typescript()]
+  external: [
+    "react/jsx-runtime",
+    "react",
+    "react-dom/client",
+  ],
+  plugins: [typescript()],
 };
