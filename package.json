@@ -1,32 +1,34 @@
 {
-  "name": "cs6750-group-project",
+  "name": "rsbuild-react-js",
   "version": "1.0.0",
-  "description": "Robert Fischer's prototype for the CS6750 at Georgia Tech",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "build": "rollup -c",
-    "watch": "npm run build -- -w"
+    "build": "rsbuild build",
+    "dev": "rsbuild dev --open",
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "preview": "rsbuild preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/RobertFischer/cs6750-group-project.git"
-  },
-  "author": "Robert Fischer",
-  "license": "UNLICENSED",
-  "bugs": {
-    "url": "https://github.com/RobertFischer/cs6750-group-project/issues"
-  },
-  "homepage": "https://robertfischer.github.com/cs6750-group-project/",
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tslib": "^2.8.1"
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "^12.1.2",
+    "@eslint/compat": "^1.2.7",
+    "@eslint/js": "^9.23.0",
+    "@rsbuild/core": "^1.3.1",
+    "@rsbuild/plugin-react": "^1.1.1",
+    "@rsbuild/plugin-type-check": "^1.2.1",
     "@tsconfig/create-react-app": "^2.0.5",
     "@types/react": "^19.1.1",
     "@types/react-dom": "^19.1.2",
-    "rollup": "^4.39.0",
+    "eslint": "^9.23.0",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.3",
     "typescript": "^5.8.3"
   }
 }
