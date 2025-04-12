@@ -1,14 +1,14 @@
 import $ from "jquery";
-import { useState, useDeferredValue, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { defer,isFinite,isEmpty } from "lodash";
 
 const audios:Map<string,AudioCtrl> = new Map();
 
 export enum AudioState {
-  Error,
-  Loading,
-  Playing,
-  CanPlay,
+  Error="Error",
+  Loading="Loading",
+  Playing="Playing",
+  CanPlay="CanPlay",
 }
 
 export class AudioCtrl {
@@ -17,8 +17,11 @@ export class AudioCtrl {
   stateChangeHandlers:(()=>void)[]=[]
 
   constructor(url:string) {
+    console.debug("Initializing audio controller", { url });
+
     this.audio = new Audio(url);
     const setState = (newState:AudioState) => () => {
+      console.debug("Audio state change", { url, newState });
       this.state = newState; 
       while(!isEmpty(this.stateChangeHandlers)) {
         const handler = this.stateChangeHandlers.shift();
@@ -32,30 +35,34 @@ export class AudioCtrl {
     $audio.on("pause", setState(AudioState.CanPlay));
     $audio.on("ended", setState(AudioState.CanPlay));
     $audio.on("error", (event) => {
-      console.error("Error loading audio", { url, event });
+      console.error("Audio error", { url, event });
       setState(AudioState.Error);
     });
   }
 
   stop():void {
     if(this.state === AudioState.Playing) {
+      console.debug("Stopping audio", { url:this.audio.src });
       this.audio.pause();
     }
   }
 
   playSample():void {
     if(this.state === AudioState.Loading) {
+      console.debug("Deferring playing sample because it is loading", { url:this.audio.src });
       this.stateChangeHandlers.push(() => {
         this.playSample();
       });
       return;
     } else if(this.state === AudioState.Playing) {
+      console.debug("Not starting to play sample because it is already playing", { url:this.audio.src });
       return;
     } else {
+      console.debug("Stopping audio before playing sample", { url:this.audio.src });
       audios.forEach((ctrl) => ctrl.stop());
     }
 
-    const shiftLength = 5;
+    const shiftLength = 3.5;
     const volumeSteps = 100;
     const stepPeriodMs = 1000 * shiftLength / volumeSteps;
 
@@ -112,14 +119,19 @@ export function useAudio(url:string):AudioCtrl {
 }
 
 export function useAudioState(audio:AudioCtrl):AudioState {
-  const [audioState, setAudioState] = useState(AudioState.CanPlay);
+  const [audioState, setAudioState] = useState(audio.state);
   useEffect(() => {
-    setAudioState(audio.state);
     let ignoreCallback = false;
-    audio.stateChangeHandlers.push(() => {
-      if(!ignoreCallback) setAudioState(audio.state)
-    });
+    const attachHandler = () => {
+      audio.stateChangeHandlers.push(() => {
+        if(!ignoreCallback) {
+          setAudioState(audio.state);
+          attachHandler();
+        }
+      });
+    };
+    attachHandler();
     return () => { ignoreCallback = true; };
   }, [ audio, audio.state ]);
-  return useDeferredValue(audioState);
+  return audioState;
 }
