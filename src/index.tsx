@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import ReactDOM from "react-dom/client";
 import "./main.css";
+import App from "./App";
 
 const root = document.getElementById('app');
 if(!root) {
@@ -9,7 +10,7 @@ if(!root) {
 
 ReactDOM.createRoot(root).render(
   <StrictMode>
-    <h1>Hello, World!</h1>
+    <App />
   </StrictMode>
 );
 
