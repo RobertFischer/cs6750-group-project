@@ -9,8 +9,6 @@ const podcastUrls = shuffle(uniq([
   "https://feed.cdnstream1.com/zjb/feed/download/56/66/3d/56663d4c-d661-4806-a679-ccea6058f935.xml",
   "https://feed.podbean.com/themagicianswife/feed.xml",
   "https://feed.skeptoid.com",
-  "https://feeds.acast.com/public/shows/618c3caaa322d1001350082c",
-  "https://feeds.acast.com/public/shows/664f2721b522f30012900375",
   "https://feeds.blubrry.com/feeds/whyaredads.xml",
   "https://feeds.buzzsprout.com/1101152.rss",
   "https://feeds.buzzsprout.com/1411126.rss",
@@ -23,8 +21,6 @@ const podcastUrls = shuffle(uniq([
   "https://feeds.megaphone.fm/sciencevs",
   "https://feeds.megaphone.fm/thebestshow",
   "https://feeds.megaphone.fm/YMRT7068253588",
-  "https://feeds.npr.org/510019/podcast.xml",
-  "https://feeds.npr.org/510351/podcast.xml",
   "https://feeds.publicradio.org/public_feeds/spectacular-failures",
   "https://feeds.redcircle.com/7655b7ec-dc57-47c9-ab96-1a8fa02f6573",
   "https://feeds.redcircle.com/b78540f3-d05f-4269-bdb3-e22c1aca55ed",
@@ -39,7 +35,6 @@ const podcastUrls = shuffle(uniq([
   "https://feeds.simplecast.com/Y8lFbOT4",
   "https://illrepute.libsyn.com/rss",
   "https://knowledgefight.libsyn.com/rss",
-  "https://media.rss.com/imnotscaredyourescaredep1/feed.xml",
   "https://rss.art19.com/newcomers",
   "https://rss.art19.com/too-scary-didnt-watch",
   "https://tituspodcast.libsyn.com/rss",
@@ -47,8 +42,6 @@ const podcastUrls = shuffle(uniq([
   "https://www.omnycontent.com/d/playlist/796469f9-ea34-46a2-8776-ad0f015d6beb/eb9aa0b9-9618-418c-88f3-b07c011ee6e9/81371812-755e-4015-9587-b07c011ee71c/podcast.rss",
   "https://www.omnycontent.com/d/playlist/89050f29-3cfb-4513-a5d2-ac79004bd7ba/55c64838-70c7-4576-b4e4-ac800012ec27/05855b96-adce-4eaa-9d54-ac8300634c30/podcast.rss",
   "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/0e563f45-9d14-4ce8-8ef0-ae32006cd7e7/0d4cc74d-fff7-4b89-8818-ae32006cd7f0/podcast.rss",
-  "https://www.spreaker.com/show/4530061/episodes/feed",
-  "https://www.spreaker.com/show/5882087/episodes/feed",
 ]));
 
 
