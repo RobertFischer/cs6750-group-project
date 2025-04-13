@@ -20,7 +20,6 @@ const podcastUrls = shuffle(uniq([
   "https://feeds.megaphone.fm/sciencevs",
   "https://feeds.megaphone.fm/thebestshow",
   "https://feeds.megaphone.fm/YMRT7068253588",
-  "https://feeds.publicradio.org/public_feeds/spectacular-failures",
   "https://feeds.redcircle.com/7655b7ec-dc57-47c9-ab96-1a8fa02f6573",
   "https://feeds.redcircle.com/b78540f3-d05f-4269-bdb3-e22c1aca55ed",
   "https://feeds.simplecast.com/Ao0C24M8",
