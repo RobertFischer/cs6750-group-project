@@ -1,26 +1,21 @@
 import './App.css';
-import { useAudio, useAudioState } from "./hooks/audio";
+import { Podcast } from "./hooks/podcast";
+import { useMatchups } from "./hooks/matchups";
+import Contender from "./Contender";
 
-const App = () => {
-  const audio = useAudio("https://robertfischer.github.io/cs6750-individual-project/part3.mp3");
-  useAudioState(audio);
-  return (
-    <div id="appContainer" className="container">
-      <div className="row">
-        <div className="col-12">
-          <h3>Pick Your Podcast Preference</h3>
+export default function App() {
+  const matchupOrWinner = useMatchups();
+  if(matchupOrWinner instanceof Podcast) {
+    return (<Contender position="Winner" podcast={matchupOrWinner} onSelect={()=>{}} />);
+  } else {
+    const { podcastA, podcastB, selectWinner } = matchupOrWinner;
+    return (
+      <div id="appContainer" className="fluid-container">
+        <div className="row justify-content-evenly">
+          <Contender position="A" podcast={podcastA} onSelect={() => selectWinner("A")} />
+          { podcastA !== podcastB && <Contender position="B" podcast={podcastB} onSelect={() => selectWinner("B")} /> }
         </div>
       </div>
-      <div className="row justify-content-evenly">
-        <div className="col-12 col-md-4">
-          Option 1
-        </div>
-        <div className="col-12 col-md-4">
-          Option 2
-        </div>
-      </div>
-    </div>
-  );
+    );
+  }
 };
-
-export default App;

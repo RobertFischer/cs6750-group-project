@@ -1,6 +1,8 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginTypeCheck } from "@rsbuild/plugin-type-check";
+import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill";
+
 
 export default defineConfig({
   html: {
@@ -15,6 +17,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    pluginNodePolyfill(),
     pluginReact(),
     pluginTypeCheck({
       typescript: {
