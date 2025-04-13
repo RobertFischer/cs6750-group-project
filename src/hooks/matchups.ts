@@ -7,7 +7,6 @@ const podcastUrls = shuffle(uniq([
   "https://anchor.fm/s/ff612a4c/podcast/rss",
   "https://feed.cdnstream1.com/zjb/feed/download/56/66/3d/56663d4c-d661-4806-a679-ccea6058f935.xml",
   "https://feed.podbean.com/themagicianswife/feed.xml",
-  "https://feed.skeptoid.com",
   "https://feeds.blubrry.com/feeds/whyaredads.xml",
   "https://feeds.buzzsprout.com/1101152.rss",
   "https://feeds.buzzsprout.com/1411126.rss",
