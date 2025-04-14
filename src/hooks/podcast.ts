@@ -79,11 +79,11 @@ export class Podcast {
       "pubDate"
     )
     this.oldestEpisode = episodes.shift() || null;
+    this.mostRecentEpisode = episodes.pop() || null;
     this.sampleEpisodes = sortBy(
       compact(shuffle(episodes).slice(0, 3)),
       "pubDate"
     )
-    this.mostRecentEpisode = episodes.pop() || null;
   }
 
 }

@@ -64,7 +64,7 @@ export class AudioCtrl {
 
     console.debug("Playing a sample!", { audio:this.audio });
 
-    const shiftLength = 10;
+    const shiftLength = 20;
     const volumeSteps = 100;
     const stepPeriodMs = 1000 * shiftLength / volumeSteps;
 
@@ -74,17 +74,19 @@ export class AudioCtrl {
     const offsetRatio = Math.random() * (maxOffset - minOffset) + minOffset;
     const startTime = (() => {
       if(isFinite(rawDuration)) {
+        // Hopefully our offset ratio gets us a good random spot in the file.
         if((rawDuration - (rawDuration * offsetRatio)) > (shiftLength * 3)) {
           return rawDuration * offsetRatio;
         }
-        if((rawDuration - (rawDuration * minOffset*2)) > (shiftLength * 3)) {
-          return minOffset * 2;
-        }
-        if((rawDuration - (rawDuration * minOffset)) > (shiftLength * 3)) {
-          return minOffset;
+        // Try for a later spot in the episode.
+        for(let i = maxOffset ; i >= 0; i -= minOffset) {
+          if((rawDuration - (rawDuration * i)) > (shiftLength * 3)) {
+            return rawDuration * i;
+          }
         }
       }
-      return 0;
+      // Just skip 1 second in (in case there's ads or intro music or whatever).
+      return 1;
     })();
     this.audio.currentTime = startTime;
     this.audio.volume = 0.001;
@@ -128,10 +130,11 @@ export class AudioCtrl {
         } else {
           console.debug("Not decreasing volume because of state", this.state);
         }
-        if(this.audio.volume === 0) {
-          this.audio.pause();
-        } else {
+        if(0 < this.audio.volume) {
           volumeDown();
+        } else {
+          hasStopped = true;
+          this.audio.pause();
         }
       });
     };
