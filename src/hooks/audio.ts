@@ -32,6 +32,7 @@ export class AudioCtrl {
     const $audio = $(this.audio);
     $audio.one("canplaythrough", setState(AudioState.CanPlay));
     $audio.on("playing", setState(AudioState.Playing));
+    $audio.on("seeking", setState(AudioState.Queued));
     $audio.on("play", setState(AudioState.Queued));
     $audio.on("pause", setState(AudioState.CanPlay));
     $audio.on("ended", setState(AudioState.CanPlay));
@@ -68,7 +69,23 @@ export class AudioCtrl {
     const stepPeriodMs = 1000 * shiftLength / volumeSteps;
 
     const rawDuration = this.audio.duration;
-    const startTime = isFinite(rawDuration) && rawDuration > (shiftLength * 3 + 1) ? rawDuration / 3 : 1
+    const minOffset = 1/8;
+    const maxOffset = 7/8;
+    const offsetRatio = Math.random() * (maxOffset - minOffset) + minOffset;
+    const startTime = (() => {
+      if(isFinite(rawDuration)) {
+        if((rawDuration - (rawDuration * offsetRatio)) > (shiftLength * 3)) {
+          return rawDuration * offsetRatio;
+        }
+        if((rawDuration - (rawDuration * minOffset*2)) > (shiftLength * 3)) {
+          return minOffset * 2;
+        }
+        if((rawDuration - (rawDuration * minOffset)) > (shiftLength * 3)) {
+          return minOffset;
+        }
+      }
+      return 0;
+    })();
     this.audio.currentTime = startTime;
     this.audio.volume = 0.001;
     this.audio.play();
@@ -94,15 +111,23 @@ export class AudioCtrl {
     }, stepPeriodMs);
     const volumeUp = () => {
       nextStep(() => {
-        this.audio.volume = Math.min(1, this.audio.volume + (1/volumeSteps));
-        console.debug("Increased volume", this.audio.volume);
+        if(this.state === AudioState.Playing) {
+          this.audio.volume = Math.min(1, this.audio.volume + (1/volumeSteps));
+          console.debug("Increased volume", this.audio.volume);
+        } else {
+          console.debug("Not increasing volume because of state", this.state);
+        }
         if(this.audio.volume < 1) volumeUp();
       });
     };
     const volumeDown = () => {
       nextStep(() => {
-        this.audio.volume = Math.max(0, this.audio.volume - (1/volumeSteps));
-        console.debug("Decreased volume", this.audio.volume);
+        if(this.state === AudioState.Playing) {
+          this.audio.volume = Math.max(0, this.audio.volume - (1/volumeSteps));
+          console.debug("Decreased volume", this.audio.volume);
+        } else {
+          console.debug("Not decreasing volume because of state", this.state);
+        }
         if(this.audio.volume === 0) {
           this.audio.pause();
         } else {
@@ -111,20 +136,8 @@ export class AudioCtrl {
       });
     };
  
-    const enqueueVolumeChanges = () => {
-      console.debug("Running volume changes");
-      volumeUp();
-      setTimeout(volumeDown, 1000 * shiftLength * 2);
-    };
-    defer(() => {
-      if(this.state === AudioState.Playing) {
-        console.debug("Triggering volume changes immediately");
-        enqueueVolumeChanges();
-      } else {
-        console.debug("Enquing volume changes after state change", this.state);
-        this.stateChangeHandlers.push(enqueueVolumeChanges);
-      }
-    });
+    volumeUp();
+    setTimeout(volumeDown, 1000 * shiftLength * 2);
   }
 }
 
