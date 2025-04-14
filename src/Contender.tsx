@@ -76,6 +76,16 @@ export type LoadedContenderArgs = CommonContenderArgs & {
 };
 
 export default function Contender(args:ContenderArgs) { 
+  return (
+    <div className="col-12 col-md-10 col-lg-4 col-xl-3">
+      <div className="card">
+        <ContenderBody {...args} />
+      </div>
+    </div>
+  );
+}
+
+function ContenderBody(args:ContenderArgs) {
   const { podcast } = args;
   if(!podcast) {
     console.warn("No podcast found", { podcast });
@@ -91,8 +101,7 @@ export default function Contender(args:ContenderArgs) {
 
 function LoadedContender({ podcast, position, onSelect }:LoadedContenderArgs) {
   return (
-    <div className="col-12 col-md-10 col-lg-4 col-xl-3">
-      <div className="card">
+    <>
         <h4 className="card-header">{ position === "Winner" ? "Winner!" : `Podcast ${position}` }</h4>
         { podcast.imageUrl && <img src={podcast.imageUrl} className="card-img-top ratio ratio-1x1 " /> }
         <div className="card-body">
@@ -120,15 +129,13 @@ function LoadedContender({ podcast, position, onSelect }:LoadedContenderArgs) {
             <center><button type="button" onClick={onSelect} className="btn btn-primary btn-lg">Select Podcast {position}</button></center>
           </div>
         ) }
-      </div>
-    </div>
+      </>
   );
 }
 
 function ErrorContender({position}:CommonContenderArgs) {
   return (
-    <div className="col-12 col-md-10 col-lg-4 col-xl-3">
-      <div className="card">
+      <>
         <h4 className="card-header">
           Podcast {position}
         </h4>
@@ -137,15 +144,13 @@ function ErrorContender({position}:CommonContenderArgs) {
             <center><i className="fa-solid fa-skull-crossbones fa-fade fa-2xl"></i></center>
           </h3>
         </div>
-      </div>
-    </div>
+      </>
   );
 }
 
 function LoadingContender({position}:CommonContenderArgs) {
   return (
-    <div className="col-12 col-md-11 col-lg-4">
-      <div className="card">
+      <>
         <h4 className="card-header">
           Podcast {position}
         </h4>
@@ -154,8 +159,7 @@ function LoadingContender({position}:CommonContenderArgs) {
             <center><i className="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i></center>
           </h3>
         </div>
-      </div>
-    </div>
+      </>
   );
 }
 
