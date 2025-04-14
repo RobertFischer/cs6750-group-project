@@ -114,7 +114,7 @@ export class AudioCtrl {
     const volumeUp = () => {
       nextStep(() => {
         if(this.state === AudioState.Playing) {
-          this.audio.volume = Math.min(1, this.audio.volume + (1/volumeSteps));
+          this.audio.volume = Math.min(1, this.audio.volume + 3*(1/volumeSteps));
           console.debug("Increased volume", this.audio.volume);
         } else {
           console.debug("Not increasing volume because of state", this.state);

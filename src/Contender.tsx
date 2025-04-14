@@ -1,3 +1,4 @@
+import "./Contender.css";
 import { PodcastStatus, Podcast, PodcastEpisode } from "./hooks/podcast";
 import { useAudio, useAudioState, AudioState } from "./hooks/audio";
 
@@ -31,7 +32,7 @@ export function EpisodePill({ audioState }:EpisodePillArgs) {
       break;
   }
   return (
-    <i className={`fa-solid fa-${icon} text-bg-${style}`}></i>
+    <i className={`fa-solid fa-${icon} text-bg-${style} episode-play-button`}></i>
   );
 }
 
@@ -45,7 +46,11 @@ export function Episode({ episode }:EpisodeArgs) {
   const audio = useAudio(episode.mp3Url);
   const audioState = useAudioState(audio);
   const onClick = () => {
-    if(audioState === AudioState.CanPlay) audio.playSample();
+    if(audioState === AudioState.CanPlay) {
+      audio.playSample();
+    } else {
+      audio.stop();
+    }
   };
   return (
     <li className="list-group-item p-0" key={episode.mp3Url}>
