@@ -95,9 +95,12 @@ export function usePodcast(feedUrl:string):PodcastStatus {
     if(loadedPodcast) {
       setState(loadedPodcast);
       return;
-    } else {
-      setState("Loading");
-    }
+    } 
+
+    const timeoutId = setTimeout(() => {
+      if(!podcasts.get(feedUrl)) setState("Error");
+    }, 5 * 1000);
+
     new Parser().parseURL(feedUrl).then(
       (result) => {
         const pod = new Podcast(feedUrl, result);
@@ -108,6 +111,8 @@ export function usePodcast(feedUrl:string):PodcastStatus {
       console.error("Error parsing RSS feed", { feedUrl, error });
       setState("Error");
     });
+
+    return () => { clearTimeout(timeoutId); }
   }, [ feedUrl ]);
   return state;
 }
